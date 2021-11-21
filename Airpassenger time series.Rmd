@@ -1,0 +1,120 @@
+---
+title: "Google stocks"
+author: "Megha Roy"
+date: "21/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importing Libraries
+```{r}
+library(ggplot2)
+library(tseries)
+library(forecast)
+library(reshape2) 
+library(astsa)
+```
+
+The AirPassenger dataset in R provides monthly totals of a US airline passengers, from 1949 to 1960. 
+
+
+
+
+
+```{r}
+data(AirPassengers)
+AirPassengers
+```
+
+### Checking for missing values
+```{r}
+sum(is.na(AirPassengers))
+```
+```{r}
+boxplot(AirPassengers)
+```
+
+There are no missing values and outliers in the data. 
+
+
+```{r}
+start(AirPassengers)
+```
+
+
+```{r}
+ end(AirPassengers)
+```
+```{r}
+summary(AirPassengers)
+```
+
+### Cyclic Variation 
+```{r}
+plot(AirPassengers)
+
+```
+
+The passenger numbers increase over time with each year.As an inference, over an year the no. of passengers increase particularly during July to September and decrease after it.
+
+
+```{r}
+cycle(AirPassengers)
+
+```
+
+### TREND 
+```{r}
+plot(aggregate(AirPassengers,FUN=mean))
+```
+
+
+
+```{r}
+boxplot(AirPassengers~cycle(AirPassengers))
+
+```
+
+In the boxplot there are more passengers traveling in months 6 to 9 with higher means and higher variances than the other months, indicating seasonality with a apparent cycle of 12 months.
+```{r}
+
+```
+
+
+
+
+
+
+```{r}
+trends<-decompose(AirPassengers, "multiplicative")
+plot(trends)
+```
+
+
+
+### Check whether data is stationary or not
+
+AUGMENTED DICKEY FULLER TEST
+```{r}
+adf.test(AirPassengers, alternative = "stationary")
+```
+As a rule of thumb, where the p-value is less than 5%, we strong evidence against the null hypothesis, so we reject the null hypothesis. As per the test results above, the p-value is 0.01 which is <0.05 therefore we reject the null in favour of the alternative hypothesis that the time series is stationary.
+
+
+
+```
+```{r}
+
+```
+
+```
+
+```
+
+```
+
+
+
